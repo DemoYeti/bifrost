@@ -21,7 +21,7 @@ use bifrost_ve_minting::VeMintingInterface;
 
 #[derive(Clone, Encode, Decode, PartialEq, Eq, RuntimeDebug, TypeInfo, Default)]
 pub struct BoostPoolInfo<Balance, BlockNumber> {
-	pub total_votes: Balance, // Total number of veBNC voting
+	pub total_votes: Balance, // Total number of bbBNC voting
 	pub start_round: BlockNumber,
 	pub end_round: BlockNumber,
 	pub round_length: BlockNumber,
@@ -36,13 +36,13 @@ pub struct UserBoostInfo<T: Config> {
 }
 
 pub trait BoostInterface<AccountId, CurrencyId, Balance, BlockNumber> {
-	fn refresh_vebnc_farming(who: &AccountId) -> DispatchResult;
+	fn refresh_bbbnc_farming(who: &AccountId) -> DispatchResult;
 }
 
 impl<T: Config> BoostInterface<AccountIdOf<T>, CurrencyIdOf<T>, BalanceOf<T>, BlockNumberFor<T>>
 	for Pallet<T>
 {
-	fn refresh_vebnc_farming(who: &AccountIdOf<T>) -> DispatchResult {
+	fn refresh_bbbnc_farming(who: &AccountIdOf<T>) -> DispatchResult {
 		let mut boost_pool_info = Self::boost_pool_infos();
 		let new_vote_amount = T::VeMinting::balance_of(who, None)?;
 

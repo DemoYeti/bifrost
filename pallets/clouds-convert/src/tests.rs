@@ -25,11 +25,11 @@ use bifrost_primitives::currency::{CLOUD, VBNC};
 use frame_support::{assert_noop, assert_ok};
 
 #[test]
-fn clouds_to_vebnc_should_work() {
+fn clouds_to_bbbnc_should_work() {
 	ExtBuilder::default().one_hundred_for_alice_n_bob().build().execute_with(|| {
-		// Bob convert 100 clouds to vebnc
+		// Bob convert 100 clouds to bbbnc
 		assert_noop!(
-			CloudsConvert::clouds_to_vebnc(RuntimeOrigin::signed(BOB), 100, 0),
+			CloudsConvert::clouds_to_bbbnc(RuntimeOrigin::signed(BOB), 100, 0),
 			Error::<Runtime>::NotEnoughBalance
 		);
 
@@ -38,25 +38,25 @@ fn clouds_to_vebnc_should_work() {
 
 		// expect too much vBNC
 		assert_noop!(
-			CloudsConvert::clouds_to_vebnc(RuntimeOrigin::signed(BOB), 100, 100000),
+			CloudsConvert::clouds_to_bbbnc(RuntimeOrigin::signed(BOB), 100, 100000),
 			Error::<Runtime>::LessThanExpected
 		);
 		// convert too little clouds
 		assert_noop!(
-			CloudsConvert::clouds_to_vebnc(RuntimeOrigin::signed(BOB), 1, 0),
+			CloudsConvert::clouds_to_bbbnc(RuntimeOrigin::signed(BOB), 1, 0),
 			Error::<Runtime>::LessThanExistentialDeposit
 		);
 
 		// pool does not have enough vBNC
 		assert_noop!(
-			CloudsConvert::clouds_to_vebnc(RuntimeOrigin::signed(BOB), 100, 1),
+			CloudsConvert::clouds_to_bbbnc(RuntimeOrigin::signed(BOB), 100, 1),
 			Error::<Runtime>::LessThanExpected
 		);
 		// deposit some vBNC to Pool
 		assert_ok!(Tokens::deposit(VBNC, &CloudsConvert::clouds_pool_account(), 100000000000));
 
-		// check the veBNC balance of Bob
-		let bob_old_vebnc_balance =
+		// check the bbBNC balance of Bob
+		let bob_old_bbbnc_balance =
 			<Runtime as crate::Config>::VeMinting::balance_of(&BOB, None).unwrap();
 
 		// check the old pool balance
@@ -65,13 +65,13 @@ fn clouds_to_vebnc_should_work() {
 			&CloudsConvert::clouds_pool_account(),
 		);
 
-		// Bob convert 100 clouds to vebnc
-		assert_ok!(CloudsConvert::clouds_to_vebnc(RuntimeOrigin::signed(BOB), 100, 1));
+		// Bob convert 100 clouds to bbbnc
+		assert_ok!(CloudsConvert::clouds_to_bbbnc(RuntimeOrigin::signed(BOB), 100, 1));
 
-		// check the veBNC balance of Bob
+		// check the bbBNC balance of Bob
 		assert_eq!(
 			<Runtime as crate::Config>::VeMinting::balance_of(&BOB, None).unwrap(),
-			bob_old_vebnc_balance + 20034907200
+			bob_old_bbbnc_balance + 20034907200
 		);
 
 		// check the new pool balance

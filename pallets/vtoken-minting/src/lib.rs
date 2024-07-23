@@ -932,10 +932,10 @@ pub mod pallet {
 			// check whether the token_id is supported
 			ensure!(MinimumMint::<T>::contains_key(token_id), Error::<T>::NotSupportTokenType);
 
-			// check whether the user has veBNC
-			let vebnc_balance = T::VeMinting::balance_of(&minter, None)
+			// check whether the user has bbBNC
+			let bbbnc_balance = T::VeMinting::balance_of(&minter, None)
 				.map_err(|_| Error::<T>::VeBNCCheckingError)?;
-			ensure!(vebnc_balance > BalanceOf::<T>::zero(), Error::<T>::NotEnoughBalance);
+			ensure!(bbbnc_balance > BalanceOf::<T>::zero(), Error::<T>::NotEnoughBalance);
 
 			// check whether the vtoken coefficient is set
 			let vtoken_id = T::CurrencyIdConversion::convert_to_vtoken(token_id)
@@ -1884,19 +1884,19 @@ pub mod pallet {
 
 			// get current block number
 			let current_block_number: BlockNumberFor<T> = frame_system::Pallet::<T>::block_number();
-			// get the veBNC total amount
-			let vebnc_total_issuance = T::VeMinting::total_supply(current_block_number)
+			// get the bbBNC total amount
+			let bbbnc_total_issuance = T::VeMinting::total_supply(current_block_number)
 				.map_err(|_| Error::<T>::VeBNCCheckingError)?;
-			ensure!(vebnc_total_issuance > BalanceOf::<T>::zero(), Error::<T>::BalanceZero);
+			ensure!(bbbnc_total_issuance > BalanceOf::<T>::zero(), Error::<T>::BalanceZero);
 
-			// get the veBNC balance of the minter
-			let minter_vebnc_balance = T::VeMinting::balance_of(minter, None)
+			// get the bbBNC balance of the minter
+			let minter_bbbnc_balance = T::VeMinting::balance_of(minter, None)
 				.map_err(|_| Error::<T>::VeBNCCheckingError)?;
-			ensure!(minter_vebnc_balance > BalanceOf::<T>::zero(), Error::<T>::NotEnoughBalance);
+			ensure!(minter_bbbnc_balance > BalanceOf::<T>::zero(), Error::<T>::NotEnoughBalance);
 
-			// get the percentage of the veBNC balance of the minter to the total veBNC amount and
+			// get the percentage of the bbBNC balance of the minter to the total bbBNC amount and
 			// get the square root of the percentage
-			let percentage = Permill::from_rational(minter_vebnc_balance, vebnc_total_issuance);
+			let percentage = Permill::from_rational(minter_bbbnc_balance, bbbnc_total_issuance);
 			let sqrt_percentage =
 				FixedU128::from_inner(percentage * 1_000_000_000_000_000_000u128).sqrt();
 			let percentage = Permill::from_rational(

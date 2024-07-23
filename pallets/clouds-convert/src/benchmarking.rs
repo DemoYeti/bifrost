@@ -28,7 +28,7 @@ use crate::{BalanceOf, Call, Config, Pallet as CloudsConvert, Pallet};
 use orml_traits::MultiCurrency;
 
 benchmarks! {
-clouds_to_vebnc {
+clouds_to_bbbnc {
 	let test_account: T::AccountId = account("seed",1,1);
 
 	T::MultiCurrency::deposit(CLOUD, &test_account, BalanceOf::<T>::unique_saturated_from(100_000_000_000_000u128))?;

@@ -134,14 +134,14 @@ fn notify_reward_amount() {
 		assert_ok!(VeMinting::set_config(RuntimeOrigin::root(), Some(0), Some(7 * 86400 / 12)));
 
 		System::set_block_number(System::block_number() + 40);
-		assert_ok!(VeMinting::get_rewards(RuntimeOrigin::signed(BOB))); // balance of veBNC is 0
+		assert_ok!(VeMinting::get_rewards(RuntimeOrigin::signed(BOB))); // balance of bbBNC is 0
 		assert_ok!(VeMinting::create_lock_inner(
 			&BOB,
 			20_000_000_000,
 			System::block_number() + (4 * 365 * 86400 - 7 * 86400) / 12,
 		));
 		assert_eq!(Tokens::free_balance(KSM, &BOB), 0);
-		// balance of veBNC is not 0
+		// balance of bbBNC is not 0
 		assert_noop!(
 			VeMinting::get_rewards(RuntimeOrigin::signed(BOB)),
 			Error::<Runtime>::NoRewards

@@ -31,13 +31,13 @@ use sp_std::marker::PhantomData;
 
 /// Weight functions needed for bifrost_cross_in_out.
 pub trait WeightInfo {
-	fn clouds_to_vebnc() -> Weight;
+	fn clouds_to_bbbnc() -> Weight;
 	fn charge_vbnc() -> Weight;
 }
 
 // For backwards compatibility and tests
 impl WeightInfo for () {
-	fn clouds_to_vebnc() -> Weight {
+	fn clouds_to_bbbnc() -> Weight {
 		Weight::from_parts(150_867_000, 5223)
 			.saturating_add(RocksDbWeight::get().reads(7_u64))
 			.saturating_add(RocksDbWeight::get().writes(3_u64))

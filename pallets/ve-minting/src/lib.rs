@@ -63,8 +63,8 @@ pub type CurrencyIdOf<T> = <<T as Config>::MultiCurrency as MultiCurrency<
 	<T as frame_system::Config>::AccountId,
 >>::CurrencyId;
 
-const VE_LOCK_ID: LockIdentifier = *b"vebnclck";
-const MARKUP_LOCK_ID: LockIdentifier = *b"vebncmkp";
+const VE_LOCK_ID: LockIdentifier = *b"bbbnclck";
+const MARKUP_LOCK_ID: LockIdentifier = *b"bbbncmkp";
 
 #[derive(Clone, Encode, Decode, PartialEq, Eq, RuntimeDebug, TypeInfo, Default)]
 pub struct VeConfig<Balance, BlockNumber> {

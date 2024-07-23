@@ -81,7 +81,7 @@ pub mod pallet {
 		/// Weight information for extrinsics in this module.
 		type WeightInfo: WeightInfo;
 
-		/// locked blocks for veBNC converted from clouds
+		/// locked blocks for bbBNC converted from clouds
 		#[pallet::constant]
 		type LockedBlocks: Get<BlockNumberFor<Self>>;
 	}
@@ -97,7 +97,7 @@ pub mod pallet {
 	#[pallet::event]
 	#[pallet::generate_deposit(pub(crate) fn deposit_event)]
 	pub enum Event<T: Config> {
-		CloudsConverted { clouds: BalanceOf<T>, vebnc: BalanceOf<T> },
+		CloudsConverted { clouds: BalanceOf<T>, bbbnc: BalanceOf<T> },
 
 		VbncCharged { vbnc: BalanceOf<T> },
 	}
@@ -112,11 +112,11 @@ pub mod pallet {
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
 		#[pallet::call_index(0)]
-		#[pallet::weight(T::WeightInfo::clouds_to_vebnc())]
-		pub fn clouds_to_vebnc(
+		#[pallet::weight(T::WeightInfo::clouds_to_bbbnc())]
+		pub fn clouds_to_bbbnc(
 			origin: OriginFor<T>,
 			value: BalanceOf<T>,
-			expected_min_vebnc: BalanceOf<T>,
+			expected_min_bbbnc: BalanceOf<T>,
 		) -> DispatchResult {
 			let who = ensure_signed(origin)?;
 
@@ -125,7 +125,7 @@ pub mod pallet {
 				.map_err(|_| Error::<T>::NotEnoughBalance)?;
 
 			let can_get_vbnc = Self::calculate_can_get_vbnc(value)?;
-			ensure!(can_get_vbnc >= expected_min_vebnc, Error::<T>::LessThanExpected);
+			ensure!(can_get_vbnc >= expected_min_bbbnc, Error::<T>::LessThanExpected);
 			// ensure can_get_vbnc greater than existential deposit
 			let existential_deposit = T::MultiCurrency::minimum_balance(VBNC);
 			ensure!(can_get_vbnc >= existential_deposit, Error::<T>::LessThanExistentialDeposit);
@@ -137,11 +137,11 @@ pub mod pallet {
 			let vbnc_pool_account = Self::clouds_pool_account();
 			T::MultiCurrency::transfer(VBNC, &vbnc_pool_account, &who, can_get_vbnc)?;
 
-			// mint veBNC for user
+			// mint bbBNC for user
 			T::VeMinting::create_lock_inner(&who, can_get_vbnc, T::LockedBlocks::get())?;
 
 			// deposit event
-			Self::deposit_event(Event::CloudsConverted { clouds: value, vebnc: can_get_vbnc });
+			Self::deposit_event(Event::CloudsConverted { clouds: value, bbbnc: can_get_vbnc });
 
 			Ok(())
 		}
