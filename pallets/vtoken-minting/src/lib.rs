@@ -395,19 +395,19 @@ pub mod pallet {
 	#[pallet::getter(fn hook_iteration_limit)]
 	pub type HookIterationLimit<T: Config> = StorageValue<_, u32, ValueQuery>;
 
-	//【vtoken -> Blocks】, the locked blocks for each vtoken when minted in an incentive mode
+	//[vtoken -> Blocks], the locked blocks for each vtoken when minted in an incentive mode
 	#[pallet::storage]
 	#[pallet::getter(fn get_mint_with_lock_blocks)]
 	pub type MintWithLockBlocks<T: Config> =
 		StorageMap<_, Blake2_128Concat, CurrencyId, BlockNumberFor<T>>;
 
-	//【vtoken -> incentive coefficient】,the incentive coefficient for each vtoken when minted in
+	//[vtoken -> incentive coefficient],the incentive coefficient for each vtoken when minted in
 	// an incentive mode
 	#[pallet::storage]
 	#[pallet::getter(fn get_vtoken_incentive_coef)]
 	pub type VtokenIncentiveCoef<T: Config> = StorageMap<_, Blake2_128Concat, CurrencyId, u128>;
 
-	//【user + vtoken -> (total_locked, vec[(locked_amount, due_block_num)])】, the locked vtoken
+	//[user + vtoken -> (total_locked, vec[(locked_amount, due_block_num)])], the locked vtoken
 	// records for each user
 	#[pallet::storage]
 	#[pallet::getter(fn get_vtoken_lock_ledger)]

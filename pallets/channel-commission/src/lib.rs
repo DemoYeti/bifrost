@@ -168,8 +168,8 @@ pub mod pallet {
 	#[pallet::getter(fn channel_next_id)]
 	pub type ChannelNextId<T: Config> = StorageValue<_, ChannelId, ValueQuery>;
 
-	/// Mapping a channel id to a receive account and a name, 【channel_id =>(receive_account,
-	/// name)】
+	/// Mapping a channel id to a receive account and a name, [channel_id =>(receive_account,
+	/// name)]
 	#[pallet::storage]
 	#[pallet::getter(fn channels)]
 	pub type Channels<T: Config> = StorageMap<
@@ -179,13 +179,13 @@ pub mod pallet {
 		(AccountIdOf<T>, BoundedVec<u8, T::NameLengthLimit>),
 	>;
 
-	/// Mapping a vtoken to a commission token, 【vtoken => commission_token】
+	/// Mapping a vtoken to a commission token, [vtoken => commission_token]
 	#[pallet::storage]
 	#[pallet::getter(fn commission_tokens)]
 	pub type CommissionTokens<T> = StorageMap<_, Blake2_128Concat, CurrencyId, CurrencyId>;
 
-	/// Mapping a channel + vtoken to corresponding commission rate, 【(channel_id, vtoken) =>
-	/// commission rate】
+	/// Mapping a channel + vtoken to corresponding commission rate, [(channel_id, vtoken) =>
+	/// commission rate]
 	#[pallet::storage]
 	#[pallet::getter(fn channel_commission_token_rates)]
 	pub type ChannelCommissionTokenRates<T> = StorageDoubleMap<
@@ -198,7 +198,7 @@ pub mod pallet {
 		ValueQuery,
 	>;
 
-	/// Mapping a channel + vtoken to corresponding channel share, 【(channel_id, vtoken) => share】
+	/// Mapping a channel + vtoken to corresponding channel share, [(channel_id, vtoken) => share]
 	#[pallet::storage]
 	#[pallet::getter(fn channel_vtoken_shares)]
 	pub type ChannelVtokenShares<T> = StorageDoubleMap<
@@ -211,29 +211,29 @@ pub mod pallet {
 		ValueQuery,
 	>;
 
-	/// 【vtoken => (old_issuance, new_issuance)】,old_issuance is the vtoken issuance at last
+	/// [vtoken => (old_issuance, new_issuance)],old_issuance is the vtoken issuance at last
 	/// clearing point,  new_issuance is the ongoing accumulative issuance the last clearing point
 	#[pallet::storage]
 	#[pallet::getter(fn vtoken_issuance_snapshots)]
 	pub type VtokenIssuanceSnapshots<T> =
 		StorageMap<_, Blake2_128Concat, CurrencyId, (BalanceOf<T>, BalanceOf<T>), ValueQuery>;
 
-	/// Vtoken total minted amount in the ongoing period for the chain, 【vtoken => (old_total_mint,
-	/// new_total_mint)】
+	/// Vtoken total minted amount in the ongoing period for the chain, [vtoken => (old_total_mint,
+	/// new_total_mint)]
 	#[pallet::storage]
 	#[pallet::getter(fn period_vtoken_total_mint)]
 	pub type PeriodVtokenTotalMint<T> =
 		StorageMap<_, Blake2_128Concat, CurrencyId, (BalanceOf<T>, BalanceOf<T>), ValueQuery>;
 
-	/// Vtoken total redeemed amount in the ongoing period for the chain, 【vtoken =>
-	/// (old_total_redeem, new_total_redeem)】
+	/// Vtoken total redeemed amount in the ongoing period for the chain, [vtoken =>
+	/// (old_total_redeem, new_total_redeem)]
 	#[pallet::storage]
 	#[pallet::getter(fn period_vtoken_total_redeem)]
 	pub type PeriodVtokenTotalRedeem<T> =
 		StorageMap<_, Blake2_128Concat, CurrencyId, (BalanceOf<T>, BalanceOf<T>), ValueQuery>;
 
-	/// Vtoken minted amount in the ongoing period for the channel, 【(channel_id, vtoken) =>
-	/// (old_mint_amount, new_mint_amount)】
+	/// Vtoken minted amount in the ongoing period for the channel, [(channel_id, vtoken) =>
+	/// (old_mint_amount, new_mint_amount)]
 	#[pallet::storage]
 	#[pallet::getter(fn period_channel_vtoken_mint)]
 	pub type PeriodChannelVtokenMint<T> = StorageDoubleMap<
@@ -246,21 +246,21 @@ pub mod pallet {
 		ValueQuery,
 	>;
 
-	/// Commission pool for last period and ongoing period, 【commission token => (old_amount,
-	/// new_amount)】
+	/// Commission pool for last period and ongoing period, [commission token => (old_amount,
+	/// new_amount)]
 	#[pallet::storage]
 	#[pallet::getter(fn period_total_commissions)]
 	pub type PeriodTotalCommissions<T> =
 		StorageMap<_, Blake2_128Concat, CurrencyId, (BalanceOf<T>, BalanceOf<T>), ValueQuery>;
 
-	/// Commission amount that has been cleared for the current clearing process, 【commission token
-	/// => amount】
+	/// Commission amount that has been cleared for the current clearing process, [commission token
+	/// => amount]
 	#[pallet::storage]
 	#[pallet::getter(fn period_cleared_commissions)]
 	pub type PeriodClearedCommissions<T> =
 		StorageMap<_, Blake2_128Concat, CurrencyId, BalanceOf<T>, ValueQuery>;
 
-	/// Commission amount to be claimed by channels, 【channel id + commission token => amount】
+	/// Commission amount to be claimed by channels, [channel id + commission token => amount]
 	#[pallet::storage]
 	#[pallet::getter(fn channel_claimable_commissions)]
 	pub type ChannelClaimableCommissions<T> = StorageDoubleMap<

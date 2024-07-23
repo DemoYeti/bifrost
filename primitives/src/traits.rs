@@ -137,7 +137,7 @@ pub trait VtokenMintingOperator<CurrencyId, Balance, AccountId, TimeUnit> {
 		deduct_amount: Balance,
 	) -> DispatchResult;
 
-	/// Get currency Entrance and Exit accounts.【entrance_account, exit_account】
+	/// Get currency Entrance and Exit accounts.[entrance_account, exit_account]
 	fn get_entrance_and_exit_accounts() -> (AccountId, AccountId);
 
 	/// Get the token_unlock_ledger storage info to refund to the due era unlocking users.

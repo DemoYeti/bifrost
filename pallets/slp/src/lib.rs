@@ -1314,7 +1314,7 @@ pub mod pallet {
 			let staking_agent = Self::get_currency_staking_agent(currency_id)?;
 			staking_agent.charge_hosting_fee(
 				fee_to_charge,
-				// Dummy value for 【from】account
+				// Dummy value for [from] account
 				&beneficiary,
 				&beneficiary,
 				currency_id,

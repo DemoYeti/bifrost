@@ -183,7 +183,7 @@ pub mod pallet {
 		OptionQuery,
 	>;
 
-	/// minimum crossin and crossout amount【crossinMinimum, crossoutMinimum】
+	/// minimum crossin and crossout amount [crossinMinimum, crossoutMinimum]
 	#[pallet::storage]
 	#[pallet::getter(fn get_crossing_minimum_amount)]
 	pub type CrossingMinimumAmount<T> =
